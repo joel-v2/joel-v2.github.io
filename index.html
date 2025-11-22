@@ -12,72 +12,70 @@
             height: 100%;
         }
 
-        /* Estilo principal del fondo */
+        /* ESTILO DEL FONDO CON SOMBRA (VIÑETA) */
         body {
-            background-color: #CD202C;
+            /* El centro es Rojo (#CD202C) y se oscurece a Negro (#000) en los bordes */
+            background: radial-gradient(circle at center, #CD202C 20%, #000000 120%);
+            background-attachment: fixed; /* Evita que el fondo se mueva */
+            
             display: flex;
             flex-direction: column;
             justify-content: center;
             align-items: center;
-            font-family: sans-serif; /* Fuente general para toda la página */
+            /* Usamos la fuente del juego (Courier) */
+            font-family: 'Courier New', Courier, monospace; 
         }
 
-        /* El contenedor para agrupar todo */
         .menu-container {
             text-align: center;
             display: flex;
             flex-direction: column;
             align-items: center;
-            gap: 20px; /* Espacio entre elementos */
+            gap: 20px;
         }
 
-        /* ESTILO DEL MENSAJE NUEVO */
+        /* TEXTO "TOCA EL BOTÓN" */
         .mensaje-instruccion {
-            color: white;
+            color: black; /* Texto negro */
             font-size: 24px;
             font-weight: bold;
-            text-transform: uppercase; /* Pone el texto en mayúsculas automáticamente */
-            letter-spacing: 2px; /* Separa un poco las letras para que se vea elegante */
-            margin-bottom: 10px; /* Un empujoncito extra para separarlo del botón */
-            animation: parpadeo 2s infinite; /* Opcional: hace que parpadee suavemente */
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            margin-bottom: 10px;
+            /* Sin animación, totalmente estático */
         }
 
-        /* Estilo del Botón de Interrogación */
+        /* BOTÓN DE INTERROGACIÓN */
         .boton-menu {
             display: flex;
             justify-content: center;
             align-items: center;
             width: 120px;  
             height: 120px; 
-            background-color: white; 
-            color: #CD202C; 
+            background-color: black; /* BOLA NEGRA */
+            color: #CD202C; /* SIGNO ROJO */
             font-size: 80px; 
             font-weight: bold;
             text-decoration: none; 
             border-radius: 50%; 
-            box-shadow: 0 5px 15px rgba(0,0,0,0.3); 
+            box-shadow: 0 5px 25px rgba(0,0,0,0.6); /* Sombra más intensa */
             transition: transform 0.3s ease, box-shadow 0.3s ease; 
         }
 
         .boton-menu:hover {
             transform: scale(1.1); 
-            box-shadow: 0 8px 20px rgba(0,0,0,0.4);
+            box-shadow: 0 10px 30px rgba(0,0,0,0.8);
+            color: white; /* Al pasar el mouse, el signo se vuelve blanco (efecto cool) */
             cursor: pointer;
         }
 
-        /* Estilo de la imagen */
         .gif-decorativo {
             max-width: 30%; 
             height: auto;
             border-radius: 15px; 
             margin-top: 20px;
-        }
-
-        /* Animación suave para el texto (opcional) */
-        @keyframes parpadeo {
-            0% { opacity: 1; }
-            50% { opacity: 0.7; }
-            100% { opacity: 1; }
+            /* Un poco de sombra al gif también para que se integre */
+            box-shadow: 0 10px 20px rgba(0,0,0,0.5); 
         }
 
     </style>
@@ -90,9 +88,9 @@
 
         <a href="juego1.html" class="boton-menu">?</a>
 
-        <img class="gif-decorativo" src="7a9d482f9615562e774938217b1e0f2a.jpg" alt="Decoración misteriosa">
+        <img class="gif-decorativo" src="7a9d482f9615562e774938217b1e0f2a.jpg" alt="Decoración">
 
-    </div>
+    </div>  
 
 </body>
 </html>

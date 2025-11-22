@@ -5,23 +5,32 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Nivel 1</title>
     <style>
+        body, html {
+            margin: 0;
+            padding: 0;
+            height: 100%;
+        }
+
         body {
-            background-color: #CD202C; /* Mismo rojo */
-            font-family: 'Courier New', Courier, monospace; /* Estilo tipo máquina de escribir */
+            /* FONDO CON SOMBRA NEGRA EN BORDES */
+            background: radial-gradient(circle at center, #CD202C 20%, #000000 120%);
+            background-attachment: fixed;
+            
+            font-family: 'Courier New', Courier, monospace;
             display: flex;
             flex-direction: column;
             align-items: center;
             justify-content: center;
             min-height: 100vh;
-            margin: 0;
             padding: 20px;
+            box-sizing: border-box; /* Evita problemas de scroll lateral */
         }
 
         .formulario-container {
-            background-color: rgba(255, 255, 255, 0.9); /* Fondo blanco semi-transparente para leer bien */
+            background-color: rgba(255, 255, 255, 0.95); 
             padding: 30px;
             border-radius: 15px;
-            box-shadow: 0 10px 25px rgba(0,0,0,0.5);
+            box-shadow: 0 20px 50px rgba(0,0,0,0.8); /* Sombra más fuerte para resaltar */
             max-width: 400px;
             width: 100%;
             text-align: center;
@@ -38,7 +47,7 @@
         }
 
         input {
-            width: 90%;
+            width: 85%; /* Ajustado para que no toque los bordes */
             padding: 10px;
             font-size: 18px;
             border: 2px solid black;
@@ -46,9 +55,10 @@
             outline: none;
             text-align: center;
             font-family: inherit;
+            background-color: #fff;
         }
 
-        /* Clase para cuando la respuesta es correcta (se pone verde) */
+        /* Clase verde para respuesta correcta */
         .correcto {
             background-color: #d4edda !important;
             border-color: #28a745 !important;
@@ -65,12 +75,12 @@
             font-weight: bold;
             cursor: pointer;
             border-radius: 5px;
-            transition: transform 0.2s;
+            transition: transform 0.2s, background-color 0.2s;
         }
 
         button:hover {
             transform: scale(1.05);
-            background-color: #333;
+            background-color: #CD202C; /* Al pasar el mouse se pone rojo */
         }
 
         /* Imagen final oculta */
@@ -79,7 +89,7 @@
             width: 100%;
             max-width: 500px;
             border-radius: 10px;
-            box-shadow: 0 0 20px white;
+            box-shadow: 0 0 30px white;
         }
 
         .ocultar-form {
@@ -89,64 +99,48 @@
 </head>
 <body>
 
-    <!-- Contenedor del Formulario -->
     <div id="quiz-box" class="formulario-container">
-        <h2 style="color: black; margin-top: 0;">🔒 NIVEL 1</h2>
+        <h2 style="color: black; margin-top: 0; border-bottom: 2px solid black; padding-bottom: 10px;">それはあなたでしょうか？</h2>
 
-        <!-- PREGUNTA 1 -->
         <label>Cantante</label>
         <input type="text" id="p1" oninput="validar(this, ['joji'])">
 
-        <!-- PREGUNTA 2 -->
         <label>Día Del Onomástico</label>
         <input type="text" id="p2" oninput="validar(this, ['13', 'trece'])">
 
-        <!-- PREGUNTA 3 -->
         <label>Galleta</label>
         <input type="text" id="p3" oninput="validar(this, ['picaras', 'pícaras'])">
 
-        <button onclick="verificarFinal()">VERIFICAR</button>
+        <button onclick="verificarFinal()">try?</button>
         
-        <p id="mensaje-error" style="color: red; display: none; font-weight: bold;">❌ Aún hay respuestas incorrectas</p>
+        <p id="mensaje-error" style="color: #CD202C; display: none; font-weight: bold; margin-top: 15px;">nop</p>
     </div>
 
-    <!-- Imagen Final (Pon aquí tu foto final) -->
-    <!-- Por ahora puse la misma tuya, pero cámbiala si quieres otra -->
     <img id="premio-final" src="IMG_9613.png">
 
     <script>
-        // Esta función se ejecuta cada vez que escribes una letra
         function validar(input, respuestasCorrectas) {
             let valorUsuario = input.value.toLowerCase().trim();
-            
-            // Si lo que escribió está en la lista de respuestas correctas...
             if (respuestasCorrectas.includes(valorUsuario)) {
-                input.classList.add("correcto"); // Se pone verde
+                input.classList.add("correcto");
             } else {
-                input.classList.remove("correcto"); // Se quita lo verde
+                input.classList.remove("correcto");
             }
         }
 
         function verificarFinal() {
-            // Obtenemos los 3 inputs
             let i1 = document.getElementById("p1");
             let i2 = document.getElementById("p2");
             let i3 = document.getElementById("p3");
 
-            // Verificamos si los 3 tienen la clase "correcto" (o sea, están verdes)
             if (i1.classList.contains("correcto") && 
                 i2.classList.contains("correcto") && 
                 i3.classList.contains("correcto")) {
                 
-                // Si todo está bien: Ocultamos formulario y mostramos foto
                 document.getElementById("quiz-box").classList.add("ocultar-form");
                 document.getElementById("premio-final").style.display = "block";
-                
-                // Opcional: Si prefieres redirigir a OTRO archivo de imagen, usa esto:
-                // window.location.href = "nombre-de-tu-foto.jpg";
 
             } else {
-                // Si falta algo
                 document.getElementById("mensaje-error").style.display = "block";
             }
         }
