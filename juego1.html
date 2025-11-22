@@ -23,33 +23,55 @@
             justify-content: center;
             min-height: 100vh;
             padding: 20px;
-            box-sizing: border-box; /* Evita problemas de scroll lateral */
+            box-sizing: border-box;
+            overflow-x: hidden; /* Evita scroll horizontal */
         }
 
+        /* LAYOUT PRINCIPAL */
+        .main-layout {
+            display: flex;
+            gap: 25px; 
+            align-items: flex-start;
+            transition: all 0.5s ease;
+        }
+
+        /* --- ESTILOS DEL FORMULARIO --- */
         .formulario-container {
             background-color: rgba(255, 255, 255, 0.95); 
             padding: 30px;
             border-radius: 15px;
-            box-shadow: 0 20px 50px rgba(0,0,0,0.8); /* Sombra más fuerte para resaltar */
+            box-shadow: 0 20px 50px rgba(0,0,0,0.8);
             max-width: 400px;
             width: 100%;
             text-align: center;
+            position: relative;
+            z-index: 2;
+        }
+
+        h2.titulo-japones {
+            color: black; 
+            margin-top: 0; 
+            border-bottom: 2px solid black; 
+            padding-bottom: 10px;
+            font-family: "Noto Sans JP", sans-serif; 
+            font-size: 22px; /* Ajuste de tamaño */
         }
 
         label {
             display: block;
             color: black;
             font-weight: bold;
-            font-size: 20px;
-            margin-top: 20px;
+            font-size: 16px; /* Un poco más pequeño para que encaje mejor */
+            margin-top: 15px;
             margin-bottom: 5px;
             text-transform: uppercase;
+            font-family: 'Courier New', Courier, monospace;
         }
 
         input {
-            width: 85%; /* Ajustado para que no toque los bordes */
+            width: 85%;
             padding: 10px;
-            font-size: 18px;
+            font-size: 16px;
             border: 2px solid black;
             border-radius: 5px;
             outline: none;
@@ -58,7 +80,6 @@
             background-color: #fff;
         }
 
-        /* Clase verde para respuesta correcta */
         .correcto {
             background-color: #d4edda !important;
             border-color: #28a745 !important;
@@ -66,8 +87,8 @@
         }
 
         button {
-            margin-top: 30px;
-            padding: 15px 30px;
+            margin-top: 25px;
+            padding: 12px 30px;
             background-color: black;
             color: white;
             border: none;
@@ -76,11 +97,74 @@
             cursor: pointer;
             border-radius: 5px;
             transition: transform 0.2s, background-color 0.2s;
+            font-family: inherit;
         }
 
         button:hover {
             transform: scale(1.05);
-            background-color: #CD202C; /* Al pasar el mouse se pone rojo */
+            background-color: #CD202C;
+        }
+
+        /* --- NUEVOS ESTILOS DE LAS PISTAS CON IMAGEN --- */
+        .pistas-container {
+            display: none; /* OCULTO INICIALMENTE */
+            flex-direction: column;
+            gap: 15px;
+            width: 260px; /* Un poco más ancho para que quepan las fotos */
+        }
+
+        .pista-box {
+            background-color: rgba(255, 255, 255, 0.95);
+            padding: 10px;
+            border-radius: 10px;
+            border-left: 5px solid black; /* Cambié el borde a la izquierda para que se vea mejor con la foto */
+            
+            /* Flexbox para alinear imagen y texto */
+            display: flex;
+            align-items: center; /* Centrados verticalmente */
+            gap: 10px; /* Espacio entre foto y texto */
+
+            text-align: left;
+            font-weight: bold;
+            box-shadow: 0 10px 20px rgba(0,0,0,0.5);
+            font-family: "Noto Sans JP", sans-serif;
+            font-size: 14px;
+        }
+
+        /* Estilo para las pequeñas imágenes de las pistas */
+        .pista-img {
+            width: 50px;  /* Tamaño cuadrado */
+            height: 50px; /* Tamaño cuadrado */
+            border-radius: 5px; /* Bordes redondeados */
+            object-fit: cover; /* Para que la imagen no se deforme */
+            border: 1px solid black;
+        }
+
+        /* --- ESTILOS DEL GATO (TRIGGER) --- */
+        #cat-hint-trigger {
+            position: fixed;
+            bottom: -60px;
+            right: 20px;
+            width: 120px;
+            cursor: pointer;
+            transition: bottom 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            z-index: 10;
+            filter: drop-shadow(0 5px 15px rgba(0,0,0,0.5));
+        }
+
+        #cat-hint-trigger:hover {
+            bottom: 0;
+        }
+
+        /* --- CLASE MÁGICA PARA MOSTRAR PISTAS --- */
+        .main-layout.mostrar-pistas .pistas-container {
+            display: flex;
+            animation: slideInLeft 0.5s ease forwards;
+        }
+
+        @keyframes slideInLeft {
+            from { opacity: 0; transform: translateX(-50px); }
+            to { opacity: 1; transform: translateX(0); }
         }
 
         /* Imagen final oculta */
@@ -91,34 +175,71 @@
             border-radius: 10px;
             box-shadow: 0 0 30px white;
         }
-
-        .ocultar-form {
+        
+        /* Ocultar elementos cuando se muestra el premio final */
+        body.juego-terminado .main-layout,
+        body.juego-terminado #cat-hint-trigger {
             display: none;
         }
     </style>
 </head>
 <body>
 
-    <div id="quiz-box" class="formulario-container">
-        <h2 style="color: black; margin-top: 0; border-bottom: 2px solid black; padding-bottom: 10px;">それはあなたでしょうか？</h2>
-
-        <label>Cantante</label>
-        <input type="text" id="p1" oninput="validar(this, ['joji'])">
-
-        <label>Día Del Onomástico</label>
-        <input type="text" id="p2" oninput="validar(this, ['13', 'trece'])">
-
-        <label>Galleta</label>
-        <input type="text" id="p3" oninput="validar(this, ['picaras', 'pícaras'])">
-
-        <button onclick="verificarFinal()">try?</button>
+    <div class="main-layout" id="main-layout">
         
-        <p id="mensaje-error" style="color: #CD202C; display: none; font-weight: bold; margin-top: 15px;">nop</p>
+        <div class="pistas-container">
+            
+            <div class="pista-box">
+                <img src="pistajoji.png" alt="Pista 1" class="pista-img">
+                <div>ヒント１：<br>Glimpse of us</div>
+            </div>
+
+            <div class="pista-box">
+                <img src="pistarubius.png" alt="Pista 2" class="pista-img">
+                <div>ヒント２：<br>ElRubiusOMG</div>
+            </div>
+
+            <div class="pista-box">
+                <img src="pistapicaras.png" alt="Pista 3" class="pista-img">
+                <div>ヒント３：<br>Son dulces y redondas</div>
+            </div>
+
+        </div>
+
+        <div id="quiz-box" class="formulario-container">
+            <h2 class="titulo-japones">それはあなたでしょうか？</h2>
+
+            <label>Cantante</label>
+            <input type="text" id="p1" oninput="validar(this, ['joji'])">
+
+            <label>Día Del Onomástico</label>
+            <input type="text" id="p2" oninput="validar(this, ['13', 'trece'])">
+
+            <label>Galleta</label>
+            <input type="text" id="p3" oninput="validar(this, ['picaras', 'pícaras'])">
+
+            <button onclick="verificarFinal()">try?</button>
+            
+            <p id="mensaje-error" style="color: #CD202C; display: none; font-weight: bold; margin-top: 15px; font-family: 'Courier New', Courier, monospace;">❌ Respuestas incorrectas</p>
+        </div>
+
     </div>
 
     <img id="premio-final" src="IMG_9613.png">
 
+    <img id="cat-hint-trigger" src="PISTASCORREGIDO.png" alt="¿Pistas?">
+
     <script>
+        // --- LÓGICA DE LAS PISTAS ---
+        const catTrigger = document.getElementById('cat-hint-trigger');
+        const mainLayout = document.getElementById('main-layout');
+
+        catTrigger.addEventListener('click', function() {
+            mainLayout.classList.toggle('mostrar-pistas');
+        });
+
+
+        // --- LÓGICA DEL JUEGO ---
         function validar(input, respuestasCorrectas) {
             let valorUsuario = input.value.toLowerCase().trim();
             if (respuestasCorrectas.includes(valorUsuario)) {
@@ -137,7 +258,7 @@
                 i2.classList.contains("correcto") && 
                 i3.classList.contains("correcto")) {
                 
-                document.getElementById("quiz-box").classList.add("ocultar-form");
+                document.body.classList.add('juego-terminado');
                 document.getElementById("premio-final").style.display = "block";
 
             } else {
