@@ -3,83 +3,78 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>El Acertijo de Joel</title>
+    <title>Menú Principal</title>
     <style>
+        /* Reseteamos márgenes básicos */
+        body, html {
+            margin: 0;
+            padding: 0;
+            height: 100%;
+        }
+
+        /* Estilo principal del fondo */
         body {
-            background-color: #121212; /* Fondo oscuro */
-            color: #00ff9d; /* Texto verde estilo hacker/matrix */
-            font-family: 'Courier New', Courier, monospace;
+            /* El color rojo exacto que enviaste */
+            background-color: #CD202C;
+            /* Usamos Flexbox para centrar todo perfectamente */
+            display: flex;
+            flex-direction: column; /* Ordenamos elementos uno debajo del otro */
+            justify-content: center; /* Centrado vertical */
+            align-items: center; /* Centrado horizontal */
+        }
+
+        /* El contenedor para agrupar el botón y el gif */
+        .menu-container {
+            text-align: center;
             display: flex;
             flex-direction: column;
             align-items: center;
+            gap: 30px; /* Espacio entre el botón y el gif */
+        }
+
+        /* Estilo del Botón de Interrogación */
+        .boton-menu {
+            display: flex;
             justify-content: center;
-            height: 100vh;
-            margin: 0;
-            text-align: center;
-        }
-        input {
-            padding: 10px;
-            border-radius: 5px;
-            border: 1px solid #00ff9d;
-            background-color: #000;
-            color: white;
-            margin-top: 15px;
-            font-size: 16px;
-        }
-        button {
-            margin-top: 10px;
-            padding: 10px 20px;
-            background-color: #00ff9d;
-            color: #000;
-            border: none;
-            border-radius: 5px;
-            cursor: pointer;
+            align-items: center;
+            width: 120px;  /* Tamaño del círculo */
+            height: 120px; /* Tamaño del círculo */
+            background-color: white; /* Botón blanco para contraste */
+            color: #CD202C; /* Texto del color del fondo */
+            font-size: 80px; /* Tamaño de la interrogación */
             font-weight: bold;
-            font-size: 16px;
+            font-family: sans-serif;
+            text-decoration: none; /* Quita el subrayado de enlace */
+            border-radius: 50%; /* Esto hace que sea un círculo perfecto */
+            box-shadow: 0 5px 15px rgba(0,0,0,0.3); /* Una sombra suave para darle volumen */
+            transition: transform 0.3s ease, box-shadow 0.3s ease; /* Animación suave */
         }
-        button:hover {
-            background-color: #fff;
+
+        /* Efecto al pasar el mouse por encima */
+        .boton-menu:hover {
+            transform: scale(1.1); /* Crece un poquito */
+            box-shadow: 0 8px 20px rgba(0,0,0,0.4);
+            cursor: pointer;
         }
-        #imagen-final {
-            display: none; /* Oculto al inicio */
-            margin-top: 20px;
-            max-width: 80%;
-            border-radius: 10px;
-            box-shadow: 0 0 20px #00ff9d;
+
+        /* Estilo para el GIF de abajo */
+        .gif-decorativo {
+            max-width: 90%; /* Que no sea más ancho que la pantalla del celular */
+            height: auto;
+            border-radius: 15px; /* Bordes redondeados opcionales para el gif */
         }
-        .oculto { display: none; }
+
     </style>
 </head>
 <body>
 
-    <h1>🔒 Acceso Restringido</h1>
-    <p>Para ver el contenido secreto, resuelve esto:</p>
-    
-    <h3>"Cuanto más me quitas, más grande me hago. ¿Qué soy?"</h3>
+    <div class="menu-container">
+        
+        <a href="#" class="boton-menu">?</a>
 
-    <input type="text" id="respuesta" placeholder="Escribe la respuesta...">
-    <button onclick="verificar()">Desbloquear</button>
+        <img class="gif-decorativo" src="74E34481-91FD-401C-AC96-72D79BEA90D2.gif" alt="Decoración misteriosa">
 
-    <p id="mensaje"></p>
-    
-    <img id="imagen-final" src="https://media.giphy.com/media/v1.Y2lkPTc5MGI3NjExNHA4M3R6b2c4YnZ6Z2c4YnZ6Z2c4YnZ6Z2c4YnZ6Z2c4YnZ6ZyZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/xT0xezQGU5xQBQsXmW/giphy.gif" alt="Recompensa">
-
-    <script>
-        function verificar() {
-            // Convertimos la respuesta a minúsculas para que no importen las mayúsculas
-            var textoUsuario = document.getElementById("respuesta").value.toLowerCase().trim();
-            
-            // CAMBIA LA RESPUESTA CORRECTA AQUÍ
-            if (textoUsuario === "hoyo" || textoUsuario === "un hoyo" || textoUsuario === "el hoyo") {
-                document.getElementById("imagen-final").style.display = "block";
-                document.getElementById("mensaje").innerText = "✅ ¡Acceso Concedido!";
-                document.getElementById("mensaje").style.color = "white";
-            } else {
-                document.getElementById("mensaje").innerText = "❌ Acceso Denegado. Intenta de nuevo.";
-                document.getElementById("mensaje").style.color = "red";
-            }
-        }
-    </script>
+    </div>
 
 </body>
 </html>
